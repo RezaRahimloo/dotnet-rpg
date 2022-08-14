@@ -16,18 +16,18 @@ namespace dotnet_rpg.Services.CharacterService
                             Intelligence = 500,
                             Strength = 10000}
             };
-        public async Task<List<Character>> AddCharacter(Character newCharacter)
+        public async Task<List<Character>> AddCharacterAsync(Character newCharacter)
         {
             characters.Add(newCharacter);
             return characters;
         }
 
-        public async Task<List<Character>> GetAllCharacters()
+        public async Task<List<Character>> GetAllCharactersAsync()
         {
             return characters;
         }
 
-        public async Task<Character> GetCharacterById(int id)
+        public async Task<Character> GetCharacterByIdAsync(int id)
         {
             return characters.FirstOrDefault(c => c.Id == id);
         }
