@@ -28,6 +28,11 @@ namespace dotnet_rpg.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<ServiceResponse<GetCharacterDto>>> GetSingle(int id)
         {
+            var response = await _characterService.GetCharacterByIdAsync(id);
+            if(response.Success == false)
+            {
+                return NotFound(response);
+            }
             return Ok(await _characterService.GetCharacterByIdAsync(id));
         }
         [HttpDelete("{id}")]
