@@ -15,6 +15,7 @@ namespace dotnet_rpg.Data
             Console.WriteLine(a);
         }
 
+        public DbSet<User> Users { get; set; }
         public DbSet<Character> Characters { get; set; }
     }
 }
