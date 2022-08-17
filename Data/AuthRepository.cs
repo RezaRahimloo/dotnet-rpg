@@ -15,15 +15,35 @@ namespace dotnet_rpg.Data
         {
             _context = context;
         }
-        public Task<ServiceResponse<string>> Login(string username, string password)
+        public async Task<ServiceResponse<string>> LoginAsync(string username, string password)
         {
-            throw new NotImplementedException();
+            var response = new ServiceResponse<string>();
+            
+            var user  = await _context.Users
+                .FirstOrDefaultAsync(u => u.Username.ToLower() == username.ToLower());
+            
+            if(user is null)// user not found
+            {
+                response.Message = "User doesn't exist.";
+                response.Success = false;
+            }
+            else if(!VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
+            {
+                response.Message = "Wrong user creditentials.";
+                response.Success = false;
+            }
+            else
+            {
+                response.Data = user.Id.ToString();
+            }
+
+            return response;
         }
 
-        public async Task<ServiceResponse<int>> Register(User user, string password)
+        public async Task<ServiceResponse<int>> RegisterAsync(User user, string password)
         {
             ServiceResponse<int> response = new();
-            if(await UserExists(user.Username))
+            if(await UserExistsAsync(user.Username))
             {
                 response.Success = false;
                 response.Message = "User with this username already exists!";
@@ -42,7 +62,7 @@ namespace dotnet_rpg.Data
             return response;
         }
 
-        public async Task<bool> UserExists(string username)
+        public async Task<bool> UserExistsAsync(string username)
         {
             if(await _context.Users.AnyAsync(u => u.Username.ToLower() == username.ToLower()))
             {
@@ -56,6 +76,16 @@ namespace dotnet_rpg.Data
             {
                 passwordSalt = hmac.Key;
                 passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+            }
+        }
+        private bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
+        {
+            using(var hmac = new System.Security.Cryptography.HMACSHA512(passwordSalt))
+            {
+                // compute the entered password's hash
+                var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+                //Check if the password hash byte array is equal to the password hash saved in the DB
+                return computedHash.SequenceEqual(passwordHash);
             }
         }
     }

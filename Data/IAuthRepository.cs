@@ -8,8 +8,8 @@ namespace dotnet_rpg.Data
 {
     public interface IAuthRepository
     {
-        Task<ServiceResponse<int>> Register(User user, string password);
-        Task<ServiceResponse<string>> Login(string username, string password);
-        Task<bool> UserExists(string username);
+        Task<ServiceResponse<int>> RegisterAsync(User user, string password);
+        Task<ServiceResponse<string>> LoginAsync(string username, string password);
+        Task<bool> UserExistsAsync(string username);
     }
 }
