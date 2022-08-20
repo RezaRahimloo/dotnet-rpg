@@ -15,5 +15,6 @@ namespace dotnet_rpg.Models
         public User? User { get; set; }
         //[ForeignKey("CharacterId")]
         public Weapon Weapon { get; set; }
+        public List<Skill> Skills { get; set; }
     }
 }
