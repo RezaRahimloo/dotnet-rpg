@@ -14,6 +14,16 @@ namespace dotnet_rpg.Data
             var a = 2*2;
             Console.WriteLine(a);
         }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            //base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Skill>().HasData(
+                new Skill { Id = 1, Name = "Fire ball", Damage = 30},
+                new Skill { Id = 2, Name = "Grasp heart", Damage = 10000},
+                new Skill { Id = 3, Name = "Black Hole", Damage = 400},
+                new Skill { Id = 4, Name = "Blink", Damage = 0}
+            );
+        }
 
         public DbSet<User> Users { get; set; }
         public DbSet<Character> Characters { get; set; }
