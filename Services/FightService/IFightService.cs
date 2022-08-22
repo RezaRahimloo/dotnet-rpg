@@ -11,5 +11,6 @@ namespace dotnet_rpg.Services.FightService
     {
         Task<ServiceResponse<AttackResultDto>> WeaponAttackAsync(WeaponAttackDto request);
         Task<ServiceResponse<AttackResultDto>> SkillAttackAsync(SkillAttackDto request);
+        Task<ServiceResponse<FightResultDto>> FightAsync(FightRequestDto request);
     }
 }
