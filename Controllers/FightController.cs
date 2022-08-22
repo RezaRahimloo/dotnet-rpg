@@ -26,5 +26,10 @@ namespace dotnet_rpg.Controllers
         {
             return Ok(await _fightService.WeaponAttackAsync(request));
         }
+        [HttpPost("SkillAttack")]
+        public async Task<ActionResult<ServiceResponse<AttackResultDto>>> SkillAttack(SkillAttackDto request)
+        {
+            return Ok(await _fightService.SkillAttackAsync(request));
+        }
     }
 }
