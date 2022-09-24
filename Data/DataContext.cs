@@ -11,8 +11,7 @@ namespace dotnet_rpg.Data
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
-            var a = 2*2;
-            Console.WriteLine(a);
+            
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
